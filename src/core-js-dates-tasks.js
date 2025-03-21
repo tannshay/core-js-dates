@@ -17,8 +17,8 @@
  * '01 Jan 1970 00:00:00 UTC' => 0
  * '04 Dec 1995 00:12:00 UTC' => 818035920000
  */
-function dateToTimestamp(/* date */) {
-  throw new Error('Not implemented');
+function dateToTimestamp(date) {
+  return Date.parse(date);
 }
 
 /**
@@ -31,8 +31,8 @@ function dateToTimestamp(/* date */) {
  * Date(2023, 5, 1, 8, 20, 55) => '08:20:55'
  * Date(2015, 10, 20, 23, 15, 1) => '23:15:01'
  */
-function getTime(/* date */) {
-  throw new Error('Not implemented');
+function getTime(date) {
+  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
 }
 
 /**
@@ -46,8 +46,35 @@ function getTime(/* date */) {
  * '03 Dec 1995 00:12:00 UTC' => 'Sunday'
  * '2024-01-30T00:00:00.000Z' => 'Tuesday'
  */
-function getDayName(/* date */) {
-  throw new Error('Not implemented');
+function getDayName(date) {
+  const day = new Date(date).getDay();
+  let dayName = '';
+  switch (day) {
+    case 0:
+      dayName = 'Sunday';
+      break;
+    case 1:
+      dayName = 'Monday';
+      break;
+    case 2:
+      dayName = 'Tuesday';
+      break;
+    case 3:
+      dayName = 'Wednesday';
+      break;
+    case 4:
+      dayName = 'Thursday';
+      break;
+    case 5:
+      dayName = 'Friday';
+      break;
+    case 6:
+      dayName = 'Saturday';
+      break;
+    default:
+  }
+
+  return dayName;
 }
 
 /**
@@ -61,8 +88,20 @@ function getDayName(/* date */) {
  * Date('2024-02-13T00:00:00Z') => Date('2024-02-16T00:00:00Z')
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
-function getNextFriday(/* date */) {
-  throw new Error('Not implemented');
+function getNextFriday(date) {
+  let day = new Date(date).getDay();
+  let count = 0;
+  if (day === 5) {
+    count = 7;
+  }
+  while (day !== 5) {
+    day = (day + 1) % 7;
+    count += 1;
+  }
+  const nextFriday = new Date(date);
+  nextFriday.setDate(nextFriday.getDate() + count);
+
+  return nextFriday;
 }
 
 /**
